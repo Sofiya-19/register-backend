@@ -27,11 +27,12 @@ pipeline {
 
         stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sofiya')  
+                SONAR_TOKEN = credentials('sonarqube-token')  
             }
             steps {
                 sh '''
-                sonar-scanner -Dsonar.projectKey=mern-backend \
+                sonar-scanner \
+                -Dsonar.projectKey=mern-backend \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.token=$SONAR_TOKEN 
