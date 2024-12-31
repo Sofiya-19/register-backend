@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS'  
-        sonarQubeScanner 'SonarQube Scanner'  // Add the SonarQube scanner tool
+        nodejs 'NodeJS'  // Ensure NodeJS tool configuration is available in Jenkins
     }
     
     environment {
@@ -21,21 +20,21 @@ pipeline {
             steps {
                 sh '''
                 npm install
-                '''  
+                '''
             }
         }
 
         stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sonarqube-token')  
+                SONAR_TOKEN = credentials('sonarqube-token')  // Ensure this credential is set in Jenkins
             }
             steps {
                 sh '''
                 sonar-scanner \
-                -Dsonar.projectKey=mern-backend \
-                -Dsonar.sources=. \
-                -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.token=${SONAR_TOKEN}  // Correct token usage
+                    -Dsonar.projectKey=mern-backend \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://localhost:9000 \
+                    -Dsonar.token=$SONAR_TOKEN
                 '''
             }
         }
