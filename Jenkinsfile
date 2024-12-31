@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         nodejs 'NodeJS'  
+        sonarScanner 'SonarQube Scanner'  // Add the SonarQube scanner tool
     }
     
     environment {
@@ -34,7 +35,7 @@ pipeline {
                 -Dsonar.projectKey=mern-backend \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.token=%SONAR_TOKEN%
+                -Dsonar.token=${SONAR_TOKEN}  // Correct token usage
                 '''
             }
         }
