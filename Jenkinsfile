@@ -2,13 +2,12 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS'
-        sonarqube 'SonarQubeScanner' // Ensure 'SonarQubeScanner' is defined in Jenkins Global Tool Configuration
+        nodejs 'NodeJS'  // Ensure NodeJS is installed and configured
     }
     
     environment {
         NODEJS_HOME = '/Users/sofiyabalamurugan/.nvm/versions/node/v20.18.1/bin/node'
-        PATH = "$NODEJS_HOME:$PATH"
+        PATH = "$NODEJS_HOME:$PATH:/Users/sofiyabalamurugan/Downloads/sonar-scanner-6.2.1.4610-macosx-aarch64/bin"
     }
 
     stages {
@@ -31,6 +30,7 @@ pipeline {
                 SONAR_TOKEN = credentials('sonarqube-token')  
             }
             steps {
+                // Invoke sonar-scanner directly (path included in PATH environment variable)
                 sh '''
                 sonar-scanner \
                 -Dsonar.projectKey=mern-backend \
