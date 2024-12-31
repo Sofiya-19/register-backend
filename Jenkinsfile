@@ -26,7 +26,7 @@ pipeline {
 
         stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sonarqube-token')  // Ensure this credential is set in Jenkins
+                SONAR_TOKEN = credentials('sonarqube-token')  
             }
             steps {
                 sh '''
@@ -34,7 +34,7 @@ pipeline {
                     -Dsonar.projectKey=mern-backend \
                     -Dsonar.sources=. \
                     -Dsonar.host.url=http://localhost:9000 \
-                    -Dsonar.token=%SONAR_TOKEN%
+                    -Dsonar.token=$SONAR_TOKEN
                 '''
             }
         }
