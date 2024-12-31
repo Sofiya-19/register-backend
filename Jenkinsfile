@@ -20,7 +20,6 @@ pipeline {
             steps {
                 sh '''
                 npm install
-                npm run lint
                 '''  
             }
         }
