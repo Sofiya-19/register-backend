@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS'  // Ensure NodeJS tool configuration is available in Jenkins
+        nodejs 'NodeJS'  
     }
     
     environment {
@@ -30,7 +30,7 @@ pipeline {
             }
             steps {
                 sh '''
-                sonar-scanner \
+                    sonar-scanner \
                     -Dsonar.projectKey=mern-backend \
                     -Dsonar.sources=. \
                     -Dsonar.host.url=http://localhost:9000 \
