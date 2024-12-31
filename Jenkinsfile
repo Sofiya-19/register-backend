@@ -6,7 +6,7 @@ pipeline {
     }
     
     environment {
-        NODEJS_HOME = 'C:\\Program Files\\nodejs'
+        NODEJS_HOME = '/Users/sofiyabalamurugan/.nvm/versions/node/v20.18.1/bin/node'
     }
 
     stages {
@@ -18,22 +18,23 @@ pipeline {
         
         stage('Install and Build') {
             steps {
-                bat '''npm install
-                npm run lint'''  
+                sh '''
+                npm install
+                npm run lint
+                '''  
             }
         }
 
-        
         stage('SonarCodeAnalysis') {
             environment {
-                SONAR_TOKEN = credentials('sonarqube-token')  
+                SONAR_TOKEN = credentials('sofiya')  
             }
             steps {
-                bat '''
-                sonar-scanner -Dsonar.projectKey=mern-backend ^
-                -Dsonar.sources=. ^
-                -Dsonar.host.url=http://localhost:9000 ^
-                -Dsonar.token=%SONAR_TOKEN% 
+                sh '''
+                sonar-scanner -Dsonar.projectKey=mern-backend \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=http://localhost:9000 \
+                -Dsonar.token=$SONAR_TOKEN 
                 '''
             }
         }
@@ -44,7 +45,7 @@ pipeline {
             echo "Pipeline SUCCESSFULLY Build"
         }
         failure {
-            echo " Pipeline failed"
+            echo "Pipeline failed"
         }
     }
 }
